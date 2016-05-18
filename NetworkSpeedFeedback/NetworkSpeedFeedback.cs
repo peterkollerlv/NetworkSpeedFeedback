@@ -12,6 +12,7 @@ namespace NetworkSpeedFeedback
         internal IPInterfaceProperties adapterProperties;
         internal IPv4InterfaceStatistics adapterStatistics;
         internal string pingTarget;
+        internal bool pingingActive;
         internal Ping ping;
         internal long bytesReceived;
         internal Controls controls;
@@ -26,6 +27,7 @@ namespace NetworkSpeedFeedback
             Feedback.Text = 0.ToString();
             FeedbackBandwith.Text = 0.ToString();
             FeedbackLatency.Text = 0.ToString();
+            pingingActive = true;
             this.BackColor = Color.CornflowerBlue;
             this.TransparencyKey = Color.CornflowerBlue;
             pingTarget = "www.google.com";
@@ -54,30 +56,39 @@ namespace NetworkSpeedFeedback
                     Feedback.Text = bytes.ToString() + " KB/s";
                 }
                 updateBandwith(bytes);
-                pingGoogle();
+                MeasureLatency();
                 bytesReceived = adapterStatistics.BytesReceived;
             }
         }
 
-        private void pingGoogle()
+        internal void MeasureLatency()
         {
-            ping = new Ping();
-            try
+            if (pingingActive)
             {
-                if (pingTarget != "")
+                ping = new Ping();
+                try
                 {
-                    var currentPing = ping.Send(pingTarget);
-                    FeedbackLatency.Text = currentPing.RoundtripTime.ToString() + " ms";
+                    if (pingTarget != "")
+                    {
+                        var currentPing = ping.Send(pingTarget);
+                        FeedbackLatency.Text = currentPing.RoundtripTime.ToString() + " ms";
+                    }
+                    else
+                    {
+                        FeedbackLatency.Text = "Target cannot be empty";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    FeedbackLatency.Text = "Target cannot be empty";
+                    FeedbackLatency.Text = "Error";
                 }
             }
-            catch (Exception ex)
+            else
             {
-                FeedbackLatency.Text = "Error";
+                FeedbackLatency.Text = "...";
             }
+
+
         }
 
         private void updateBandwith(long bytes)

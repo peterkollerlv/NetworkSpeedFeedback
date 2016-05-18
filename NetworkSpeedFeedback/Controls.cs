@@ -22,7 +22,8 @@ namespace NetworkSpeedFeedback
             InitializeComponent();
             PingTarget.Text = networkSpeedFeedback.pingTarget;
             networkSpeedFeedback.LatencyTarget.Text = networkSpeedFeedback.pingTarget;
-            toggleOnOff = false;
+            toggleOnOff = true;
+
             System.Array colorsArray = Enum.GetValues(typeof(KnownColor));
             knownColors = new KnownColor[colorsArray.Length];
             Array.Copy(colorsArray, knownColors, colorsArray.Length);
@@ -30,8 +31,9 @@ namespace NetworkSpeedFeedback
             {
                 TextColorSelect.Items.Add(knownColors[i].ToString());
             }
+            TextColorSelect.SelectedIndex = 49;
 
-            
+
             if (networkSpeedFeedback.adapters != null)
             {
                 NetworkInterfaces.Items.Clear();
@@ -44,21 +46,27 @@ namespace NetworkSpeedFeedback
                 }
                 NetworkInterfaces.SelectedIndex = 0;
             }
+            ToggleTimer();
         }
-      
+
 
         private void ToggleOnOff_Click(object sender, EventArgs e)
         {
-            if (!toggleOnOff)
+            ToggleTimer();
+        }
+
+        private void ToggleTimer()
+        {
+            if (toggleOnOff)
             {
-                toggleOnOff = true;
+                toggleOnOff = false;
                 networkSpeedFeedback.bytesReceived = networkSpeedFeedback.selectedAdapter.GetIPv4Statistics().BytesReceived;
                 networkSpeedFeedback.RefreshTimer.Start();
                 ToggleOnOff.Text = "Stop";
             }
             else
             {
-                toggleOnOff = false;
+                toggleOnOff = true;
                 networkSpeedFeedback.bytesReceived = 0;
                 networkSpeedFeedback.RefreshTimer.Stop();
                 ToggleOnOff.Text = "Start";
@@ -88,7 +96,7 @@ namespace NetworkSpeedFeedback
 
         private void TextColorSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Control control in networkSpeedFeedback.Controls)            
+            foreach (Control control in networkSpeedFeedback.Controls)
             {
                 if (control.GetType() == typeof(Label))
                 {
@@ -99,31 +107,33 @@ namespace NetworkSpeedFeedback
 
         private void PingEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            switch (PingEnabled.Checked)
-            {
-                case true:
-                    {
-                        PingTargetLabel.Enabled = PingEnabled.Checked;
-                        PingTarget.Enabled = PingEnabled.Checked;
-                        networkSpeedFeedback.PingToGoogle.Visible = PingEnabled.Checked;
-                        networkSpeedFeedback.FeedbackLatency.Visible = PingEnabled.Checked;
-                        networkSpeedFeedback.LatencyTarget.Visible = PingEnabled.Checked;
-                        break;
-                    }
-                case false:
-                    PingTargetLabel.Enabled = PingEnabled.Checked;
-                    PingTarget.Enabled = PingEnabled.Checked;
-                    networkSpeedFeedback.PingToGoogle.Visible = PingEnabled.Checked;
-                    networkSpeedFeedback.FeedbackLatency.Visible = PingEnabled.Checked;
-                    networkSpeedFeedback.LatencyTarget.Visible = PingEnabled.Checked;
-                    break;
-            }
+            PingTargetLabel.Enabled = PingEnabled.Checked;
+            PingTarget.Enabled = PingEnabled.Checked;
+            networkSpeedFeedback.PingToGoogle.Visible = PingEnabled.Checked;
+            networkSpeedFeedback.FeedbackLatency.Visible = PingEnabled.Checked;
+            networkSpeedFeedback.LatencyTarget.Visible = PingEnabled.Checked;
         }
 
         private void PingTarget_TextChanged(object sender, EventArgs e)
         {
+            networkSpeedFeedback.pingingActive = false;
             networkSpeedFeedback.pingTarget = PingTarget.Text;
             networkSpeedFeedback.LatencyTarget.Text = PingTarget.Text;
+
+
+        }
+
+        private void UpdatePingTarget_Click(object sender, EventArgs e)
+        {
+            networkSpeedFeedback.pingingActive = true;
+        }
+
+        private void EnableSpeed_CheckedChanged(object sender, EventArgs e)
+        {
+            networkSpeedFeedback.TotalThrougput.Visible = EnableSpeed.Checked;
+            networkSpeedFeedback.Feedback.Visible = EnableSpeed.Checked;
+            networkSpeedFeedback.AdapterSpeed.Visible = EnableSpeed.Checked;
+            networkSpeedFeedback.FeedbackBandwith.Visible = EnableSpeed.Checked;
         }
     }
 }

@@ -45,7 +45,7 @@
             // 
             this.Feedback.AutoSize = true;
             this.Feedback.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Feedback.ForeColor = System.Drawing.Color.MediumBlue;
+            this.Feedback.ForeColor = System.Drawing.Color.DarkCyan;
             this.Feedback.Location = new System.Drawing.Point(168, 37);
             this.Feedback.Name = "Feedback";
             this.Feedback.Size = new System.Drawing.Size(59, 20);
@@ -61,7 +61,7 @@
             // 
             this.TotalThrougput.AutoSize = true;
             this.TotalThrougput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.TotalThrougput.ForeColor = System.Drawing.Color.MediumBlue;
+            this.TotalThrougput.ForeColor = System.Drawing.Color.DarkCyan;
             this.TotalThrougput.Location = new System.Drawing.Point(12, 37);
             this.TotalThrougput.Name = "TotalThrougput";
             this.TotalThrougput.Size = new System.Drawing.Size(150, 20);
@@ -72,7 +72,7 @@
             // 
             this.AdapterSpeed.AutoSize = true;
             this.AdapterSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.AdapterSpeed.ForeColor = System.Drawing.Color.MediumBlue;
+            this.AdapterSpeed.ForeColor = System.Drawing.Color.DarkCyan;
             this.AdapterSpeed.Location = new System.Drawing.Point(12, 57);
             this.AdapterSpeed.Name = "AdapterSpeed";
             this.AdapterSpeed.Size = new System.Drawing.Size(88, 20);
@@ -83,7 +83,7 @@
             // 
             this.FeedbackBandwith.AutoSize = true;
             this.FeedbackBandwith.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.FeedbackBandwith.ForeColor = System.Drawing.Color.MediumBlue;
+            this.FeedbackBandwith.ForeColor = System.Drawing.Color.DarkCyan;
             this.FeedbackBandwith.Location = new System.Drawing.Point(168, 57);
             this.FeedbackBandwith.Name = "FeedbackBandwith";
             this.FeedbackBandwith.Size = new System.Drawing.Size(59, 20);
@@ -94,7 +94,7 @@
             // 
             this.PingToGoogle.AutoSize = true;
             this.PingToGoogle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.PingToGoogle.ForeColor = System.Drawing.Color.MediumBlue;
+            this.PingToGoogle.ForeColor = System.Drawing.Color.DarkCyan;
             this.PingToGoogle.Location = new System.Drawing.Point(12, 77);
             this.PingToGoogle.Name = "PingToGoogle";
             this.PingToGoogle.Size = new System.Drawing.Size(77, 20);
@@ -105,7 +105,7 @@
             // 
             this.FeedbackLatency.AutoSize = true;
             this.FeedbackLatency.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.FeedbackLatency.ForeColor = System.Drawing.Color.MediumBlue;
+            this.FeedbackLatency.ForeColor = System.Drawing.Color.DarkCyan;
             this.FeedbackLatency.Location = new System.Drawing.Point(168, 77);
             this.FeedbackLatency.Name = "FeedbackLatency";
             this.FeedbackLatency.Size = new System.Drawing.Size(59, 20);
@@ -116,7 +116,7 @@
             // 
             this.LatencyTarget.AutoSize = true;
             this.LatencyTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LatencyTarget.ForeColor = System.Drawing.Color.MediumBlue;
+            this.LatencyTarget.ForeColor = System.Drawing.Color.DarkCyan;
             this.LatencyTarget.Location = new System.Drawing.Point(12, 97);
             this.LatencyTarget.Name = "LatencyTarget";
             this.LatencyTarget.Size = new System.Drawing.Size(59, 20);
@@ -127,7 +127,7 @@
             // 
             this.ToggleControls.BackColor = System.Drawing.Color.CornflowerBlue;
             this.ToggleControls.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ToggleControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ToggleControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ToggleControls.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.ToggleControls.Location = new System.Drawing.Point(214, 4);
             this.ToggleControls.Name = "ToggleControls";
@@ -142,7 +142,7 @@
             this.ExitApplication.BackColor = System.Drawing.Color.CornflowerBlue;
             this.ExitApplication.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ExitApplication.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ExitApplication.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ExitApplication.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ExitApplication.ForeColor = System.Drawing.Color.Red;
             this.ExitApplication.Location = new System.Drawing.Point(245, 4);
             this.ExitApplication.Name = "ExitApplication";
@@ -179,16 +179,16 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label Feedback;
-        private System.Windows.Forms.Label TotalThrougput;
-        private System.Windows.Forms.Label AdapterSpeed;
-        private System.Windows.Forms.Label FeedbackBandwith;
         private System.Windows.Forms.Button ToggleControls;
         internal System.Windows.Forms.Timer RefreshTimer;
         private System.Windows.Forms.Button ExitApplication;
         internal System.Windows.Forms.Label PingToGoogle;
         internal System.Windows.Forms.Label FeedbackLatency;
         internal System.Windows.Forms.Label LatencyTarget;
+        internal System.Windows.Forms.Label Feedback;
+        internal System.Windows.Forms.Label TotalThrougput;
+        internal System.Windows.Forms.Label AdapterSpeed;
+        internal System.Windows.Forms.Label FeedbackBandwith;
     }
 }
 
