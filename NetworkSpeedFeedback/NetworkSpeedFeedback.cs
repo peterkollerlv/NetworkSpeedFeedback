@@ -1,40 +1,40 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Net.NetworkInformation;
+using System.Drawing;
 
 namespace NetworkSpeedFeedback
 {
     public partial class NetworkSpeedFeedback : Form
     {
-        private NetworkInterface[] adapters;
-        private bool toggleOnOff;
-        private NetworkInterface selectedAdapter;
-        private IPInterfaceProperties adapterProperties;
-        private IPv4InterfaceStatistics adapterStatistics;
-        private Ping ping;
-        private long bytesReceived;
+        internal NetworkInterface[] adapters;
+        internal NetworkInterface selectedAdapter;
+        internal IPInterfaceProperties adapterProperties;
+        internal IPv4InterfaceStatistics adapterStatistics;
+        internal string pingTarget;
+        internal Ping ping;
+        internal long bytesReceived;
+        internal Controls controls;
+        private const int WM_NCHITTEST = 0x84;
+        private const int HTCLIENT = 0x1;
+        private const int HTCAPTION = 0x2;
 
         public NetworkSpeedFeedback()
         {
             InitializeComponent();
-            toggleOnOff = false;
+            
             Feedback.Text = 0.ToString();
             FeedbackBandwith.Text = 0.ToString();
             FeedbackLatency.Text = 0.ToString();
-
+            this.BackColor = Color.CornflowerBlue;
+            this.TransparencyKey = Color.CornflowerBlue;
+            pingTarget = "www.google.com";
             adapters = NetworkInterface.GetAllNetworkInterfaces();
-            if (adapters != null)
-            {
-                NetworkInterfaces.Items.Clear();
-                foreach (NetworkInterface adapter in adapters)
-                {
-                    //if (adapter.Speed > 0)
-                    //{
-                    NetworkInterfaces.Items.Add(adapter.Description);
-                    //}
-                }
-                NetworkInterfaces.SelectedIndex = 0;
-            }
+            controls = new Controls(this);
+            
+
+
+
         }
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
@@ -63,13 +63,20 @@ namespace NetworkSpeedFeedback
         {
             ping = new Ping();
             try
-            { 
-            var currentPing = ping.Send("www.google.com");
-            FeedbackLatency.Text = currentPing.RoundtripTime.ToString() + " ms";
+            {
+                if (pingTarget != "")
+                {
+                    var currentPing = ping.Send(pingTarget);
+                    FeedbackLatency.Text = currentPing.RoundtripTime.ToString() + " ms";
+                }
+                else
+                {
+                    FeedbackLatency.Text = "Target cannot be empty";
+                }
             }
             catch (Exception ex)
             {
-                FeedbackLatency.Text = ex.Message;
+                FeedbackLatency.Text = "Error";
             }
         }
 
@@ -85,47 +92,48 @@ namespace NetworkSpeedFeedback
             {
                 FeedbackBandwith.Text = bandwith.ToString("N") + " Kbps";
             }
-
         }
 
-        private void GetNetworkAdapters_Click(object sender, EventArgs e)
+        protected override void WndProc(ref Message m)
         {
-            adapters = NetworkInterface.GetAllNetworkInterfaces();
-            if (adapters != null)
+            switch(m.Msg)
             {
-                NetworkInterfaces.Items.Clear();
-                foreach (NetworkInterface adapter in adapters)
-                {
-                    NetworkInterfaces.Items.Add(adapter.Description);
-                }
+                case WM_NCHITTEST:
+                    base.WndProc(ref m);
+                    if((int)m.Result == HTCLIENT)
+                    {
+                        m.Result = (IntPtr)HTCAPTION;
+                    }
+                    return;
             }
+            base.WndProc(ref m);
         }
 
-        private void ToggleOnOff_Click(object sender, EventArgs e)
+        private void ToggleControls_Click(object sender, EventArgs e)
         {
-            if (!toggleOnOff)
+            if(controls != null && controls.IsDisposed != true)
             {
-                toggleOnOff = true;
-                bytesReceived = selectedAdapter.GetIPv4Statistics().BytesReceived;
-                RefreshTimer.Start();
-                ToggleOnOff.Text = "Stop";
+                if (!controls.Visible)
+                {
+                    controls.Show();
+                }
+                else
+                {
+                    controls.Hide();
+                }
             }
             else
             {
-                toggleOnOff = false;
-                bytesReceived = 0;
-                RefreshTimer.Stop();
-                ToggleOnOff.Text = "Start";
+                controls = new Controls(this);
+                controls.Show();
             }
+
+        
         }
 
-        private void NetworkInterfaces_SelectedIndexChanged(object sender, EventArgs e)
+        private void ExitApplication_Click(object sender, EventArgs e)
         {
-            if (adapters != null)
-            {
-                selectedAdapter = adapters[NetworkInterfaces.SelectedIndex];
-
-            }
+            Application.Exit();
         }
     }
 }
